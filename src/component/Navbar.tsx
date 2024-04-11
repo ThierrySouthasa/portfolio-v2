@@ -1,70 +1,52 @@
-import { useState } from 'react';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
+import * as React from 'react';
 import Box from '@mui/material/Box';
+import Tab from '@mui/material/Tab';
+import TabContext from '@mui/lab/TabContext';
+import TabList from '@mui/lab/TabList';
+import TabPanel from '@mui/lab/TabPanel';
 import Experience from './Experience';
 import Project from './Project';
 import Technology from './Technology';
+import { colors } from '../assets/theme';
 
-interface TabPanelProps {
-    children?: React.ReactNode;
-    index: number;
-    value: number;
-}
+export default function LabTabs() {
+    const [value, setValue] = React.useState('1');
 
-function CustomTabPanel(props: TabPanelProps) {
-    const { children, value, index, ...other } = props;
-
-    return (
-        <div
-            role="tabpanel"
-            hidden={value !== index}
-            id={`simple-tabpanel-${index}`}
-            aria-labelledby={`simple-tab-${index}`}
-            {...other}
-        >
-            {value === index && (
-                <Box sx={{ p: 3 }}>
-                    <Typography>{children}</Typography>
-                </Box>
-            )}
-        </div>
-    );
-}
-
-function a11yProps(index: number) {
-    return {
-        id: `simple-tab-${index}`,
-        'aria-controls': `simple-tabpanel-${index}`,
-    };
-}
-
-export default function BasicTabs() {
-    const [value, setValue] = useState(0);
-
-    const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    const handleChange = (event: React.SyntheticEvent, newValue: string) => {
         setValue(newValue);
     };
 
     return (
-        <Box sx={{ width: '100%' }}>
-            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                    <Tab label="Expériences" {...a11yProps(0)} />
-                    <Tab label="Projets" {...a11yProps(1)} />
-                    <Tab label="Technologies" {...a11yProps(2)} />
-                </Tabs>
-            </Box>
-            <CustomTabPanel value={value} index={0}>
-                <Experience />
-            </CustomTabPanel>
-            <CustomTabPanel value={value} index={1}>
-                <Project />
-            </CustomTabPanel>
-            <CustomTabPanel value={value} index={2}>
-                <Technology />
-            </CustomTabPanel>
+        <Box sx={{ width: '100%', typography: 'body1' }} >
+            <TabContext value={value} >
+                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                    <TabList
+                        onChange={handleChange}
+                        aria-label="lab API tabs example"
+                        sx={{
+                            '& .MuiTabs-flexContainer': {
+                                paddingLeft: 3
+                            },
+                            '& .MuiTab-root': {
+                                color: colors.blueNavy
+                            },
+                            '& .Mui-selected': {
+                                color: colors.gold
+                            },
+                            '& .MuiTabs-indicator': {
+                                backgroundColor: colors.gold
+                            },
+                        }}
+                    >
+                        <Tab label="Experiences" value="1" />
+                        <Tab label="Projets" value="2" />
+                        <Tab label="Technologies" value="3" />
+                    </TabList>
+                </Box>
+                <TabPanel value="1"><Experience /></TabPanel>
+                <TabPanel value="2"><Project /></TabPanel>
+                <TabPanel value="3"><Technology /></TabPanel>
+            </TabContext>
         </Box>
     );
 }
