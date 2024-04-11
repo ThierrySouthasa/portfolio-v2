@@ -1,18 +1,14 @@
 import './App.css'
-import Experience from './component/Experience'
-import Footer from './component/Footer'
 import Header from './component/header/Header'
-import Project from './component/Project'
-import Technology from './component/Technology'
+import Navbar from './component/Navbar'
+import Footer from './component/Footer'
 
 function App() {
 
     return (
         <>
             <Header />
-            <Experience />
-            <Project />
-            <Technology />
+            <Navbar />
             <Footer />
         </>
     )
